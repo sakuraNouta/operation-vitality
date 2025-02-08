@@ -1,5 +1,7 @@
-const GIST_ID = import.meta.env.VITE_GIST_ID
-const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN
+// 从 URL 获取 GIST_ID 和 GITHUB_TOKEN
+const urlParams = new URLSearchParams(window.location.search);
+const GIST_ID = urlParams.get('id');
+const GITHUB_TOKEN = urlParams.get('token');
 const GIST_API_URL = `https://api.github.com/gists/${GIST_ID}`
 
 export const getGist = () =>
