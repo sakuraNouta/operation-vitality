@@ -13,14 +13,20 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@radix-ui/themes": "^3.2.0",
+    "animate.css": "^4.1.1",
+    "classnames": "^2.5.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "unocss": "^65.4.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
+    "@iconify-json/mdi": "^1.2.3",
+    "@iconify-json/simple-icons": "^1.2.24",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
+    "@unocss/preset-icons": "^65.4.3",
     "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^9.19.0",
     "eslint-plugin-react": "^7.37.4",

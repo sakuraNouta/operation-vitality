@@ -1,56 +1,45 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import * as api from './services'
+import { Text, Progress, Spinner } from '@radix-ui/themes'
+import ItemList from './components/ItemList'
 
 export default function App() {
-  const [todos, setTodos] = useState([])
-  const [newTodo, setNewTodo] = useState('')
+  const [items, setItems] = useState([])
 
-  // 获取 Todo 列表
+  const score = items?.reduce((acc, item) => acc + item.value * item.count, 0)
+
+  const updateItems = async item => {
+    const updatedTodos = items.map(it => (it.id === item.id ? { ...item } : it))
+    const _items = await api.updateGist(updatedTodos)
+    setItems(_items)
+  }
+
   useEffect(() => {
-    api.getGist().then(todos => {
-      setTodos(todos)
+    api.getGist().then(_items => {
+      setItems(_items)
     })
   }, [])
 
-  // 添加 Todo
-  const addTodo = () => {
-    if (!newTodo.trim()) return
-    const updatedTodos = [...todos, { name: newTodo.trim() }]
-    api.updateGist(updatedTodos).then(todos => setTodos(todos))
-    setNewTodo('')
-  }
-
-  // 删除 Todo
-  const deleteTodo = index => {
-    const updatedTodos = todos.filter((_, i) => i !== index)
-    api.updateGist(updatedTodos).then(todos => setTodos(todos))
-  }
-
   return (
-    <div className="p-6 max-w-lg mx-auto bg-white rounded-lg shadow-md">
-      <h1 className="text-xl font-bold mb-4">GitHub Gist Todo List</h1>
-      <div className="flex mb-4">
-        <input
-          type="text"
-          className="flex-1 p-2 border rounded-l"
-          value={newTodo}
-          onChange={e => setNewTodo(e.target.value)}
-          placeholder="添加新的任务"
-        />
-        <button onClick={addTodo} className="p-2 bg-blue-500 text-white rounded-r">
-          添加
-        </button>
+    <main className="w-screen relative flex min-h-screen flex-col items-center justify-center">
+      {/* total score */}
+      <div className="py-4 text-center">
+        <Text className="my-1" weight="bold">
+          总分: {score}
+        </Text>
+        <div className="flex">
+          {Array.from({ length: 10 }, (_, i) =>
+            Math.min(100, Math.max(0, score - i * 10) * 10)
+          ).map((s, i) => (
+            <Progress className="w-8 mt-2 ml-1" key={i} value={s} variant="soft" radius="small" />
+          ))}
+        </div>
       </div>
-      <ul>
-        {todos.map((todo, index) => (
-          <li key={index} className="flex justify-between p-2 border-b">
-            {todo.name}
-            <button onClick={() => deleteTodo(index)} className="text-red-500 hover:underline">
-              删除
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
+      <Suspense fallback={<Spinner />}>
+        <ItemList items={items} onUpdate={updateItems} />
+      </Suspense>
+      {/* action */}
+      {/* <AddButton /> */}
+    </main>
   )
 }
