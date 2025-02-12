@@ -27,7 +27,7 @@ export default function App() {
         <Text className="my-1" weight="bold">
           总分: {score}
         </Text>
-        <div className="flex">
+        <div className="flex px-1">
           {Array.from({ length: 10 }, (_, i) =>
             Math.min(100, Math.max(0, score - i * 10) * 10)
           ).map((s, i) => (

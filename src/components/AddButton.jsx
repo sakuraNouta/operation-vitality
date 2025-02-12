@@ -36,12 +36,12 @@ export default function AddButton({ onUpdate, color }) {
   return (
     <IconButton
       className={classNames(
-        'ml-2! active:outline-0 animate__animated animate__slow',
-        isPressed && 'animate__tada'
+        'ml-2! active:outline-0 animate__animated',
+        isPressed && 'animate__flip'
       )}
       radius="full"
       variant="soft"
-      size="3"
+      size="4"
       color={color}
       loading={isPending}
       onMouseDown={handleMouseDown}
