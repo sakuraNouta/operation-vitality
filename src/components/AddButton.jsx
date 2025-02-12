@@ -36,17 +36,20 @@ export default function AddButton({ onUpdate, color }) {
   return (
     <IconButton
       className={classNames(
-        'ml-2! active:outline-0 animate__animated',
+        'ml-2! active:outline-0 animate__animated animate__slow',
         isPressed && 'animate__tada'
       )}
       radius="full"
       variant="soft"
+      size="3"
       color={color}
       loading={isPending}
       onMouseDown={handleMouseDown}
       onMouseUp={handleFinish}
+      onTouchStart={handleMouseDown}
+      onTouchEnd={handleFinish}
     >
-      <i className="i-mdi-paw" />
+      <i className="i-mdi-paw text-xl" />
     </IconButton>
   )
 }
