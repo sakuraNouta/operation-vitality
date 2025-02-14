@@ -19,7 +19,6 @@ export default function AddButton({ onUpdate, color }) {
     setIsPressed(true)
     timerRef.current = setInterval(() => {
       progressRef.current += 10
-      console.log('progress: ', progressRef.current)
       if (progressRef.current >= 100) {
         handleUpdate()
         handleFinish()
