@@ -12,7 +12,7 @@ const Record = ({ record, item, onUpdate }) => {
     setIsPressed(true)
     timerRef.current = setInterval(() => {
       progressRef.current += 10
-      if (progressRef.current >= 100) {
+      if (progressRef.current >= 200) {
         onUpdate()
         handleFinish()
       }
@@ -28,7 +28,7 @@ const Record = ({ record, item, onUpdate }) => {
   return (
     <div
       className={classNames(
-        'flex items-center w-72 mt-2 px py-1 animate__animated',
+        'flex items-center w-72 mt-2 px py-1 animate__animated animate__repeat-2',
         isPressed && 'animate__headShake bg-gray-1 rounded-lg'
       )}
       onMouseDown={handleMouseDown}
@@ -39,7 +39,7 @@ const Record = ({ record, item, onUpdate }) => {
       <Text className="w-28">{record.date}</Text>
       <i className={classNames('text-xl mr-1', item.icon, `c-${item.color}`)} />
       <Text weight="bold">{item.name}</Text>
-      <Text className="ml-auto">+{record.value}</Text>
+      <Text className="ml-auto">+{record.value * item.value}</Text>
     </div>
   )
 }
