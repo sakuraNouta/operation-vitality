@@ -1,6 +1,6 @@
 import { useEffect, useState, Suspense, useRef } from 'react'
 import * as api from './services'
-import { Text, Progress, Spinner, Separator, Heading } from '@radix-ui/themes'
+import { Progress, Spinner, Separator, Heading } from '@radix-ui/themes'
 import ItemList from './components/ItemList'
 import { RecordList } from './components/RecordList'
 

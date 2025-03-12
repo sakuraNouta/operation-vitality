@@ -1,46 +1,52 @@
 import classNames from 'classnames'
-import { Text } from '@radix-ui/themes'
-import { useRef, useState } from 'react'
+import { Spinner, Text } from '@radix-ui/themes'
+import { useState } from 'react'
 
 const Record = ({ record, item, onUpdate }) => {
+  const screenWidth = window.innerWidth
   const [isPressed, setIsPressed] = useState(false)
-  const progressRef = useRef(0)
+  const [loading, setLoading] = useState(false)
 
-  const timerRef = useRef(null)
-
-  const handleMouseDown = () => {
+  const handleStart = () => {
     setIsPressed(true)
-    timerRef.current = setInterval(() => {
-      progressRef.current += 10
-      if (progressRef.current >= 200) {
-        onUpdate()
-        handleFinish()
-      }
-    }, 100)
   }
 
-  const handleFinish = () => {
-    clearInterval(timerRef.current)
+  const handleEnd = async e => {
+    console.log('screenWidth, clientX', screenWidth, e.clientX)
+    if (e.clientX + 48 > screenWidth) {
+      setLoading(true)
+      await onUpdate()
+      setLoading(false)
+    }
     setIsPressed(false)
-    progressRef.current = 0
   }
 
   return (
-    <div
-      className={classNames(
-        'flex items-center w-72 mt-2 px py-1 animate__animated animate__repeat-2',
-        isPressed && 'animate__headShake bg-gray-1 rounded-lg'
+    <>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <div
+          draggable
+          className={classNames(
+            'flex items-center w-72 mt-2 px py-1 animate__animated animate__infinite',
+            isPressed && 'animate__headShake bg-gray-1 rounded-lg'
+          )}
+          onDragStart={handleStart}
+          onDragEnd={handleEnd}
+          onTouchStart={handleStart}
+          onTouchEnd={handleEnd}
+        >
+          <Text className="w-28">{record.date}</Text>
+          <i className={classNames('text-xl mr-1', item.icon, `c-${item.color}`)} />
+          <Text weight="bold">{item.name}</Text>
+          <Text className="ml-auto">+{record.value * item.value}</Text>
+        </div>
       )}
-      onMouseDown={handleMouseDown}
-      onMouseUp={handleFinish}
-      onTouchStart={handleMouseDown}
-      onTouchEnd={handleFinish}
-    >
-      <Text className="w-28">{record.date}</Text>
-      <i className={classNames('text-xl mr-1', item.icon, `c-${item.color}`)} />
-      <Text weight="bold">{item.name}</Text>
-      <Text className="ml-auto">+{record.value * item.value}</Text>
-    </div>
+      {isPressed && (
+        <div className="absolute right-0 h-full w-12 bg-gradient-to-r from-white to-red-4" />
+      )}
+    </>
   )
 }
 
