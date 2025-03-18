@@ -12,7 +12,7 @@ export default function App() {
   const score = data.items?.reduce((acc, item) => acc + item.value * item.count, 0) ?? 0
 
   const updateItems = async item => {
-    const today = new Date().toLocaleDateString('en-CA')
+    const today = new Date().toISOString().slice(0, 10)
 
     const existRecord = data.records.find(
       record => record.item_id === item.id && record.date === today

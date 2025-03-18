@@ -12,13 +12,14 @@ const Record = ({ record, item, onUpdate }) => {
   }
 
   const handleEnd = async e => {
-    console.log('screenWidth, clientX', screenWidth, e.clientX)
-    if (e.clientX + 48 > screenWidth) {
+    const clientX = e.clientX || e.changedTouches[0].clientX
+    console.log('screenWidth, clientX', screenWidth, clientX)
+    setIsPressed(false)
+    if (clientX > screenWidth * 0.9) {
       setLoading(true)
       await onUpdate()
       setLoading(false)
     }
-    setIsPressed(false)
   }
 
   return (
@@ -44,7 +45,12 @@ const Record = ({ record, item, onUpdate }) => {
         </div>
       )}
       {isPressed && (
-        <div className="absolute right-0 h-full w-12 bg-gradient-to-r from-white to-red-4" />
+        <div
+          className="absolute right-0 h-full w-1/10 bg-gradient-to-r from-white to-red-4"
+          style={{
+            backgroundImage: 'linear-gradient(to right, white, rgb(248 113 113))',
+          }}
+        />
       )}
     </>
   )

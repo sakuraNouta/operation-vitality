@@ -6,7 +6,7 @@ const GIST_API_URL = `https://api.github.com/gists/${GIST_ID}`
 
 export const getGist = () =>
   new Promise(resolve => {
-    return fetch(GIST_API_URL)
+    return fetch(`${GIST_API_URL}?_t=${+new Date()}`)
       .then(res => res.json())
       .then(data => {
         const content = JSON.parse(data.files['vitality.json'].content)

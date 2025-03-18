@@ -2,7 +2,7 @@ import { Card, Text } from '@radix-ui/themes'
 import AddButton from './AddButton'
 import classNames from 'classnames'
 
-export default async function ItemList({ items = [], onUpdate }) {
+export default function ItemList({ items = [], onUpdate }) {
   return (
     <div className="space-y-2">
       {items.map(item => (
