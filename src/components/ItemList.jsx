@@ -24,7 +24,7 @@ export default function ItemList({ items = [], onUpdate }) {
             </Text>
           </div>
           <AddButton
-            color={item.color}
+            color={item.color.split('-')[0]}
             onUpdate={() => onUpdate({ ...item, count: item.count + 1 })}
           />
         </Card>

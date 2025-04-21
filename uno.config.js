@@ -26,6 +26,7 @@ export default defineConfig({
     'i-simple-icons-happycow',
     'i-mdi-snake',
     'i-mdi-rabbit-variant-outline',
-    ...['pink', 'gray', 'amber', 'ruby', 'bronze'].flatMap(c => [`c-${c}`, `shadow-${c}`]),
+    'i-mdi-duck',
+    ...['pink', 'gray', 'amber-500', 'ruby', 'bronze', 'yellow'].flatMap(c => [`c-${c}`, `shadow-${c}`]),
   ],
 })
